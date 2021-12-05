@@ -155,3 +155,25 @@ class TreeNode:
         if root1.val == root2.val:
             return self.TreeIsSubtree(root1.left, root2.left) and self.TreeIsSubtree(root1.right, root2.right)
         return self.TreeIsSubtree(root1.left, root2) or self.TreeIsSubtree(root1.right, root2)
+    
+    # max sum of subtrees
+    def TreeMaxSum(self, root):
+        if root == None:
+            return 0
+        return max(self.TreeMaxSum(root.left) + root.val, self.TreeMaxSum(root.right) + root.val)
+
+    # min sum of subtrees
+    def TreeMinSum(self, root):
+        if root == None:
+            return 0
+        return min(self.TreeMinSum(root.left) + root.val, self.TreeMinSum(root.right) + root.val)
+
+    # check if the tree is a binary search tree
+    def TreeIsBST(self, root):
+        if root == None:
+            return True
+        if root.left and root.left.val > root.val:
+            return False
+        if root.right and root.right.val < root.val:
+            return False
+        return self.TreeIsBST(root.left) and self.TreeIsBST(root.right)
