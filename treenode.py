@@ -5,6 +5,9 @@ class TreeNode:
         self.left = left
         self.right = right
 
+    def __repr__(self) -> str:
+        return f"val: {self.val}, left: {self.left}, right: {self.right}"
+
     def __str__(self):
         return str(self.val)
 
@@ -20,15 +23,15 @@ class TreeNode:
             if l[i] != None:
                 node.left = TreeNode(l[i])
                 queue.append(node.left)
-            i += 1
-            if i < len(l) and l[i] != None:
-                node.right = TreeNode(l[i])
+            if l[i + 1] != None:
+                node.right = TreeNode(l[i + 1])
                 queue.append(node.right)
-            i += 1
+            i += 2
         return root
 
-    # preorder traversal
-    def TreePreorder(root):
+        # preorder traversal
+
+    def TreePreorder(self, root):
         if root == None:
             return []
         stack = [root]
@@ -42,8 +45,24 @@ class TreeNode:
                 stack.append(node.left)
         return res
 
+    # print the tree in level order skipping the null nodes
+    def TreePrint(self, root):
+        if root == None:
+            return []
+        queue = [root]
+        res = []
+        while queue:
+            node = queue.pop(0)
+            if node.val != None:
+                res.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return res
+
     # inorder traversal
-    def TreeInorder(root):
+    def TreeInorder(self, root):
         if root == None:
             return []
         stack = []
@@ -59,7 +78,7 @@ class TreeNode:
         return res
 
     # postorder traversal
-    def TreePostorder(root):
+    def TreePostorder(self, root):
         if root == None:
             return []
         stack = [root]
@@ -74,7 +93,7 @@ class TreeNode:
         return res[::-1]
 
     # level order traversal
-    def TreeLevelorder(root):
+    def TreeLevelorder(self, root):
         if root == None:
             return []
         queue = [root]
@@ -155,7 +174,7 @@ class TreeNode:
         if root1.val == root2.val:
             return self.TreeIsSubtree(root1.left, root2.left) and self.TreeIsSubtree(root1.right, root2.right)
         return self.TreeIsSubtree(root1.left, root2) or self.TreeIsSubtree(root1.right, root2)
-    
+
     # max sum of subtrees
     def TreeMaxSum(self, root):
         if root == None:
@@ -177,3 +196,42 @@ class TreeNode:
         if root.right and root.right.val < root.val:
             return False
         return self.TreeIsBST(root.left) and self.TreeIsBST(root.right)
+
+    # breadth first search
+    def TreeBFS(self, root):
+        if root == None:
+            return []
+        queue = [root]
+        res = []
+        while queue:
+            node = queue.pop(0)
+            res.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return res
+
+    # depth first search
+    def TreeDFS(self, root):
+        if root == None:
+            return []
+        res = []
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            res.append(node.val)
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+        return res
+
+    # invert a binary tree
+    def TreeInvert(self, root):
+        if not root:
+            return
+        root.left, root.right = root.right, root.left
+        self.TreeInvert(root.left)
+        self.TreeInvert(root.right)
+        return root
