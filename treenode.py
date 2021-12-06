@@ -29,8 +29,7 @@ class TreeNode:
             i += 2
         return root
 
-        # preorder traversal
-
+    #preorder traversal
     def TreePreorder(self, root):
         if root == None:
             return []
